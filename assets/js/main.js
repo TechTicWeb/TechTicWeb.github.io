@@ -1,78 +1,77 @@
-/**
-* Template Name: ComingSoon - v4.9.0
-* Template URL: https://bootstrapmade.com/comingsoon-free-html-bootstrap-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function() {
-  "use strict";
+(function($) {
+  
+  "use strict";  
 
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
+  $(window).on('load', function() {
 
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
+     /* Page Loader active
+    ========================================================*/
+    $('#preloader').fadeOut();
 
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
+  // Sticky Nav
+    $(window).on('scroll', function() {
+        if ($(window).scrollTop() > 200) {
+            $('.scrolling-navbar').addClass('top-nav-collapse');
+        } else {
+            $('.scrolling-navbar').removeClass('top-nav-collapse');
+        }
+    });
 
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
+    /* slicknav mobile menu active  */
+    $('.mobile-menu').slicknav({
+      prependTo: '.navbar-header',
+      parentTag: 'liner',
+      allowParentLinks: true,
+      duplicate: true,
+      label: '',
+      closedSymbol: '<i class="icon-arrow-right"></i>',
+      openedSymbol: '<i class="icon-arrow-down"></i>',
+    });
 
-  /**
-   * Countdown timer
-   */
-  let countdown = select('.countdown');
-  const output = countdown.innerHTML;
+    /* ==========================================================================
+    countdown timer
+    ========================================================================== */
+     jQuery('#clock').countdown('2018/10/19',function(event){
+      var $this=jQuery(this).html(event.strftime(''
+      +'<div class="time-entry days"><span>%-D</span> Days</div> '
+      +'<div class="time-entry hours"><span>%H</span> Hours</div> '
+      +'<div class="time-entry minutes"><span>%M</span> Minutes</div> '
+      +'<div class="time-entry seconds"><span>%S</span> Seconds</div> '));
+    });
 
-  const countDownDate = function() {
-    let timeleft = new Date(countdown.getAttribute('data-count')).getTime() - new Date().getTime();
+    /* WOW Scroll Spy
+    ========================================================*/
+     var wow = new WOW({
+      //disabled for mobile
+        mobile: false
+    });
+    wow.init();
 
-    let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+    // one page navigation 
+    $('.onepage-nev').onePageNav({
+            currentClass: 'active'
+    }); 
 
-    countdown.innerHTML = output.replace('%d', days).replace('%h', hours).replace('%m', minutes).replace('%s', seconds);
-  }
-  countDownDate();
-  setInterval(countDownDate, 1000);
+    /* Back Top Link active
+    ========================================================*/
+      var offset = 200;
+      var duration = 500;
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > offset) {
+          $('.back-to-top').fadeIn(400);
+        } else {
+          $('.back-to-top').fadeOut(400);
+        }
+      });
 
-})()
+      $('.back-to-top').on('click',function(event) {
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: 0
+        }, 600);
+        return false;
+      });
+
+  });      
+
+}(jQuery));
