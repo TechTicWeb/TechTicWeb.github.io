@@ -1,1 +1,0 @@
-# TechTicWeb.github.io
